@@ -2,6 +2,66 @@
 
 A comprehensive foundation for building compliant, production-ready integrations with ServiceNow Developer Instances (PDIs). This repository provides canonical rules, validation protocols, and enforcement mechanisms to ensure all ServiceNow integrations follow best practices, security standards, and platform constraints.
 
+## 🎯 Docs & Integrations Help Desk
+
+This repository includes a working **Docs & Integrations Help Desk** demo application that demonstrates:
+- Incident intake and management
+- KB article suggestions based on incident descriptions
+- Incident resolution tracking
+- Help desk statistics and deflection metrics
+
+### Quick Start
+
+```bash
+# 1. Install dependencies
+pnpm install
+
+# 2. Configure environment
+cp .env.example .env
+# Edit .env with your ServiceNow PDI credentials
+
+# 3. Seed data
+pnpm seed
+
+# 4. Start development server
+pnpm dev
+```
+
+The server will start on `http://localhost:3000` (or port specified in `PORT`).
+
+### cURL Smoke Tests
+
+```bash
+# Health check
+curl -s http://localhost:3000/health
+
+# List incidents
+curl -s http://localhost:3000/incidents
+
+# Create incident
+curl -s -X POST http://localhost:3000/incident \
+  -H "Content-Type: application/json" \
+  -d '{"product":"Product X","short_description":"OAuth callback failing"}'
+
+# Get KB suggestions (replace <SYS_ID> with actual incident sys_id)
+curl -s -X POST http://localhost:3000/incident/<SYS_ID>/suggest
+
+# Resolve incident (replace <SYS_ID> with actual incident sys_id)
+curl -s -X POST http://localhost:3000/incident/<SYS_ID>/resolve \
+  -H "Content-Type: application/json" \
+  -d '{"resolution_note":"Resolved via KB-0001"}'
+
+# Get statistics
+curl -s http://localhost:3000/stats
+```
+
+### Documentation
+
+- **[API Reference](docs/API_REFERENCE.md)** - Complete API endpoint documentation
+- **[Architecture](docs/ARCHITECTURE.md)** - System architecture and design decisions
+- **[ServiceNow Integration](docs/SERVICE_NOW.md)** - ServiceNow API usage patterns
+- **[Runbook](docs/RUNBOOK.md)** - Operational guide and troubleshooting
+
 ---
 
 ## 📚 Repository Overview
